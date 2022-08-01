@@ -29,6 +29,6 @@ app.get('/', (req, res) => {
 })
 
 // Listening port
-app.listen(5000, () => {
-  console.log('Server is running...')
+app.listen(port, () => {
+  console.log('lesten port ', port);
 })
