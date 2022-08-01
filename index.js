@@ -16,7 +16,7 @@ app.use(cors())
 app.use('/api/auth', authRoutes);
 
 // conntect to db
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.kgijh.mongodb.net/?retryWrites=true&w=majority`)
   .then(() => {
     console.log('DB Connected')
   })
