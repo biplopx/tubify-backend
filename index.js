@@ -25,7 +25,7 @@ mongoose.connect(process.env.MONGO_URI)
   })
 
 app.get('/', (req, res) => {
-  res.send('Server is running')
+  res.send('Tubify server is running')
 })
 
 // Listening port
