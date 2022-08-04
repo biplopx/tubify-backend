@@ -3,23 +3,28 @@ const mongoose = require('mongoose');
 const songModel = require('../models/songModel');
 const songRouter = express.Router();
 
-songRouter.get('/getsong', async (req, res) => {
-  res.send("Song is ready")
+// get all song
+songRouter.get('/', async (req, res) => {
+  const result = await songModel.find({})
+  res.send(result)
 });
 
 // Add Song
 songRouter.post('/add-song', async (req, res) => {
-  const { title, url } = req.body;
+  const { name, singer, cover, musicSrc, lyric } = req.body;
   // add to the database
   try {
-    const song = await songModel.create({ title, url })
+    const song = await songModel.create({
+      name, singer, cover
+      , musicSrc, lyric
+    })
     res.status(200).json("success");
   } catch (error) {
     res.status(400).json({ error: error.message })
   }
 });
 
-//  Delete song
+//  Delete song by id 
 songRouter.delete('/delete', async (req, res) => {
   const { id } = req.body;
 

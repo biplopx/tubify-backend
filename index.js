@@ -23,13 +23,11 @@ mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cl
     app.get('/', (req, res) => {
       res.send('Tubify server is running')
     })
-
-    // Listening port
-    app.listen(port, () => {
-      console.log('Listening port ', port);
-    })
   })
   .catch((error) => {
     console.log(error)
   })
-
+    // Listening port
+    app.listen(port, () => {
+      console.log('lesten port ', port);
+    })
