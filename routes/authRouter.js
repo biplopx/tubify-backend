@@ -47,6 +47,7 @@ authRouter.put('/:email', async (req, res) => {
   });
 });
 
+
 // get all users
 authRouter.get('/all-users', async (req, res) => {
   const users = await User.find({});
