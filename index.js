@@ -26,7 +26,7 @@ mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cl
 
     // Listening port
     app.listen(port, () => {
-      console.log('lesten port ', port);
+      console.log('Listening port ', port);
     })
   })
   .catch((error) => {

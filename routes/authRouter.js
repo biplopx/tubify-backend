@@ -35,8 +35,6 @@ authRouter.put('/:email', async (req, res) => {
     $set: user,
   };
   const accessToken = jwt.sign({ email: email }, process.env.ACCESS_JWT_TOKEN_SECRET, { expiresIn: '2 days' });
-  const schema = new Schema({ email: String });
-  const User = mongoose.model('User', schema);
   User.updateOne(filter, updatedDoc, options, function (err, docs) {
     if (err) {
       console.log(err)
