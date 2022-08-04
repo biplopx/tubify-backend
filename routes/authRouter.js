@@ -3,6 +3,9 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const authRouter = express.Router();
 const jwt = require('jsonwebtoken');
+const User = require('../models/usersModel');
+
+// Verify User JWT
 const jwtVerifyUser = (req, res, next) => {
   const authToken = req.headers.authorization;
   const token = authToken?.split(' ')[1];
@@ -21,6 +24,7 @@ const jwtVerifyUser = (req, res, next) => {
     })
   }
 };
+
 // authentication send token and save user email mongodb
 authRouter.put('/:email', async (req, res) => {
   const email = req.params.email;
@@ -42,4 +46,11 @@ authRouter.put('/:email', async (req, res) => {
     }
   });
 });
+
+// get all users
+authRouter.get('/all-users', async (req, res) => {
+  const users = await User.find({});
+  res.status(200).send(users);
+})
+
 module.exports = authRouter;
