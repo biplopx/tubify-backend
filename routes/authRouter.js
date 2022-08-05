@@ -44,7 +44,7 @@ authRouter.put('/:email', async (req, res) => {
     }
   });
 });
-<<<<<<< HEAD
+
 // set admin role by mahedi imun 
 authRouter.put('/admin/:email', jwtVerifyUser, async (req, res) => {
   const requester =  req.decoded.email
@@ -77,11 +77,10 @@ authRouter.get('/admin/:email', jwtVerifyUser, async (req,res)=>{
     res.send(result)
   });
 // get all users by mahedi imun 
-=======
+
 
 
 // get all users
->>>>>>> 87a7f3328c95fc092e81431f3377430d025f0b58
 authRouter.get('/all-users', async (req, res) => {
   const users = await User.find({});
   res.status(200).send(users);
