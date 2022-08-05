@@ -5,7 +5,7 @@ const authRouter = express.Router();
 const jwt = require('jsonwebtoken');
 const User = require('../models/usersModel');
 
-// Verify User JWT
+// Verify User JWT by mahedi imun
 const jwtVerifyUser = (req, res, next) => {
   const authToken = req.headers.authorization;
   const token = authToken?.split(' ')[1];
@@ -25,7 +25,7 @@ const jwtVerifyUser = (req, res, next) => {
   }
 };
 
-// authentication send token and save user email mongodb
+// authentication send token and save user email mongodb by mahedi imun
 authRouter.put('/:email', async (req, res) => {
   const email = req.params.email;
   const user = req.body;
@@ -44,8 +44,38 @@ authRouter.put('/:email', async (req, res) => {
     }
   });
 });
-
-// get all users
+// set admin role by mahedi imun 
+authRouter.put('/admin/:email', jwtVerifyUser, async (req, res) => {
+  const requester =  req.decoded.email
+  const requesterAccount = await User.findOne({email:requester});
+  const email = req.params.email;
+  if(requesterAccount.role === 'admin'){
+    const filter = { email: email }
+  const updatedDoc = {
+    $set: { role: 'admin' },
+  };
+  const result = await User.updateOne(filter, updatedDoc);
+  res.send(result)
+  }else{
+    return res.status(403).send({ message: 'forbidden' })
+  }
+  
+});
+// get admin by mahedi imun 
+authRouter.get('/admin/:email', jwtVerifyUser, async (req,res)=>{
+  const email = req.params.email
+  const user = await User.findOne({email:email});
+  const isAdmin = user.role === 'admin'
+  res.send({admin:isAdmin})
+});
+  // delete admin by mahedi imun 
+  authRouter.delete('/admin/:email',jwtVerifyUser, async (req, res) => {
+    const email = req.params.email;
+    const filter = { email: email }
+    const result = await User.deleteOne(filter)
+    res.send(result)
+  });
+// get all users by mahedi imun 
 authRouter.get('/all-users', async (req, res) => {
   const users = await User.find({});
   res.status(200).send(users);
