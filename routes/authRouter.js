@@ -47,35 +47,36 @@ authRouter.put('/:email', async (req, res) => {
 
 // set admin role by mahedi imun 
 authRouter.put('/admin/:email', jwtVerifyUser, async (req, res) => {
-  const requester =  req.decoded.email
-  const requesterAccount = await User.findOne({email:requester});
+  const requester = req.decoded.email;
+  console.log(requester)
+  const requesterAccount = await User.findOne({ email: requester });
   const email = req.params.email;
-  if(requesterAccount.role === 'admin'){
+  if (requesterAccount.role == 'admin') {
     const filter = { email: email }
-  const updatedDoc = {
-    $set: { role: 'admin' },
-  };
-  const result = await User.updateOne(filter, updatedDoc);
-  res.send(result)
-  }else{
+    const updatedDoc = {
+      $set: { role: 'admin' },
+    };
+    const result = await User.updateOne(filter, updatedDoc);
+    res.send(result)
+  } else {
     return res.status(403).send({ message: 'forbidden' })
   }
-  
+
 });
 // get admin by mahedi imun 
-authRouter.get('/admin/:email', jwtVerifyUser, async (req,res)=>{
-  const email = req.params.email
-  const user = await User.findOne({email:email});
-  const isAdmin = user.role === 'admin'
-  res.send({admin:isAdmin})
+authRouter.get('/admin/:email', jwtVerifyUser, async (req, res) => {
+  const email = req.params.email;
+  const user = await User.findOne({ email: email });
+  const isAdmin = user.role == "admin";
+  res.send({ admin: isAdmin })
 });
-  // delete admin by mahedi imun 
-  authRouter.delete('/admin/:email',jwtVerifyUser, async (req, res) => {
-    const email = req.params.email;
-    const filter = { email: email }
-    const result = await User.deleteOne(filter)
-    res.send(result)
-  });
+// delete admin by mahedi imun 
+authRouter.delete('/admin/:email', jwtVerifyUser, async (req, res) => {
+  const email = req.params.email;
+  const filter = { email: email }
+  const result = await User.deleteOne(filter)
+  res.send(result)
+});
 // get all users by mahedi imun 
 
 
