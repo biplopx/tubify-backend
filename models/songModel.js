@@ -6,25 +6,32 @@ const songSchema = new Schema({
     type: String,
     required: true
   },
-  singer:{
+  singer: {
     type: String,
     required: true
-    
+
   },
   cover: {
     type: String,
     required: true
   },
-  musicSrc:{
+  musicSrc: {
     type: String,
     required: true
 
   },
-  lyric:{
+  lyrics: {
+    type: String,
+    required: false
+  },
+  playlist: {
+    type: String,
+    required: false
+  },
+  musicType: {
     type: String,
     required: true
   }
-
-})
+});
 
 module.exports = mongoose.model('Song', songSchema);
