@@ -16,7 +16,7 @@ songRouter.post('/add-song', async (req, res) => {
   try {
     const song = await songModel.create({
       name, singer, cover
-      , musicSrc, lyric
+      , musicSrc, lyric, playlist, musicType
     })
     res.status(200).json("success");
   } catch (error) {
