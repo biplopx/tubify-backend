@@ -23,7 +23,6 @@ mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cl
     app.get('/', (req, res) => {
       res.send('Tubify server is running')
     })
-
   })
   .catch((error) => {
     console.log(error)
