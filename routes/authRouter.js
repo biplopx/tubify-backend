@@ -34,7 +34,7 @@ authRouter.put('/:email', async (req, res) => {
   const updatedDoc = {
     $set: user,
   };
-  const accessToken = jwt.sign({ email: email }, process.env.ACCESS_JWT_TOKEN_SECRET, { expiresIn: '2 days' });
+  const accessToken = jwt.sign({ email: email }, process.env.ACCESS_JWT_TOKEN_SECRET, { expiresIn: '1 mouth' });
   User.updateOne(filter, updatedDoc, options, function (err, docs) {
     if (err) {
       console.log(err)

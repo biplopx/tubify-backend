@@ -4,7 +4,7 @@ const songModel = require('../models/songModel');
 const songRouter = express.Router();
 
 // get all song
-songRouter.get('/', async (req, res) => {
+songRouter.get('/all-song', async (req, res) => {
   const result = await songModel.find({})
   res.send(result)
 });
