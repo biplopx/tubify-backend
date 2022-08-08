@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const songModel = require('../models/songModel');
 const songRouter = express.Router();
 
-// get all song api
+// get all song
 songRouter.get('/all-song', async (req, res) => {
   const result = await songModel.find({})
   res.send(result)
@@ -11,14 +11,14 @@ songRouter.get('/all-song', async (req, res) => {
 
 // Add Song api
 songRouter.post('/add-song', async (req, res) => {
-  const { name, singer, cover, musicType, playlist, musicSrc, lyric } = req.body;
+  const { name, singer, cover, musicType, playlist, musicSrc, lyric, lang } = req.body;
   // add to the database
   try {
     const song = await songModel.create({
       name, singer, cover, musicType, playlist
-      , musicSrc, lyric
+      , musicSrc, lyric, lang
     })
-    res.status(200).json("success");
+    res.status(200).json({ statuts: "Successs" });
   } catch (error) {
     res.status(400).json({ error: error.message })
   }
