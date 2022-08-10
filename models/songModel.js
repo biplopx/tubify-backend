@@ -31,6 +31,10 @@ const songSchema = new Schema({
   musicType: {
     type: String,
     required: true
+  },
+  lang: {
+    type: String,
+    required: true
   }
 });
 

@@ -34,7 +34,7 @@ authRouter.put('/:email', async (req, res) => {
   const updatedDoc = {
     $set: user,
   };
-  const accessToken = jwt.sign({ email: email }, process.env.ACCESS_JWT_TOKEN_SECRET, { expiresIn: '30 d' });
+  const accessToken = jwt.sign({ email: email }, process.env.ACCESS_JWT_TOKEN_SECRET, { expiresIn: '30d' });
   User.updateOne(filter, updatedDoc, options, function (err, docs) {
     if (err) {
       console.log(err)
@@ -44,7 +44,6 @@ authRouter.put('/:email', async (req, res) => {
     }
   });
 });
-
 // set admin role by mahedi imun 
 authRouter.put('/admin/:email', jwtVerifyUser, async (req, res) => {
   const requester = req.decoded.email;
