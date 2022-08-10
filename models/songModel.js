@@ -22,11 +22,11 @@ const songSchema = new Schema({
   },
   lyrics: {
     type: String,
-    required: false
+    required: true
   },
   playlist: {
     type: String,
-    required: false
+    required: true
   },
   musicType: {
     type: String,
