@@ -94,9 +94,6 @@ authRouter.delete('/admin/:email', jwtVerifyUser, async (req, res) => {
   const result = await User.deleteOne(filter)
   res.send(result)
 });
-// get all users by mahedi imun 
-
-
 
 // get all users
 authRouter.get('/all-users', async (req, res) => {
