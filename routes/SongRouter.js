@@ -11,14 +11,14 @@ songRouter.get('/all-song', async (req, res) => {
 
 // Add Song api
 songRouter.post('/add-song', async (req, res) => {
-  const { name, singer, cover, musicType, playlist, musicSrc, lyric, lang } = req.body;
+  const { name, singer, cover, musicType, playlist, musicSrc, lyrics, lang } = req.body;
   // add to the database
   try {
     const song = await songModel.create({
       name, singer, cover, musicType, playlist
-      , musicSrc, lyric, lang
+      , musicSrc, lyrics, lang
     })
-    res.status(200).json({ statuts: "Successs" });
+    res.status(200).json({ status: "successful" });
   } catch (error) {
     res.status(400).json({ error: error.message })
   }
