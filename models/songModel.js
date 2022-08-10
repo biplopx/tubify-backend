@@ -26,7 +26,7 @@ const songSchema = new Schema({
   },
   playlist: {
     type: String,
-    required: true
+    required: false
   },
   musicType: {
     type: String,
