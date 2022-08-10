@@ -63,6 +63,23 @@ authRouter.put('/admin/:email', jwtVerifyUser, async (req, res) => {
   }
 
 });
+// set Remove Admin role
+authRouter.put('/admin/remove/:email', jwtVerifyUser, async (req, res) => {
+  const requester = req.decoded.email;
+  const requesterAccount = await User.findOne({ email: requester });
+  const email = req.params.email;
+  if (requesterAccount.role == 'admin') {
+    const filter = { email: email }
+    const updatedDoc = {
+      $set: { role: 'user' },
+    };
+    const result = await User.updateOne(filter, updatedDoc);
+    res.json({ status: "successful", result: result })
+  } else {
+    return res.json({ status: 'forbidden' })
+  }
+
+});
 // get admin by mahedi imun 
 authRouter.get('/admin/:email', jwtVerifyUser, async (req, res) => {
   const email = req.params.email;

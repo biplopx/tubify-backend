@@ -13,8 +13,6 @@ songRouter.get('/all-song', async (req, res) => {
 // Add Song api
 songRouter.post('/add-song', async (req, res) => {
   const newSong = req.body;
-  // add to the database
-  console.log(newSong)
   try {
     const song = await songModel.create(newSong)
     res.status(200).json({ status: "successful" });
