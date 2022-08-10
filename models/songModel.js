@@ -24,7 +24,7 @@ const songSchema = new Schema({
     type: String,
     required: false
   },
-  playlist: {
+  album: {
     type: String,
     required: false
   },
@@ -35,6 +35,11 @@ const songSchema = new Schema({
   lang: {
     type: String,
     required: true
+  },
+  category: {
+    type: Schema.Types.ObjectId,
+    required: false,
+    ref: 'Category'
   }
 });
 
