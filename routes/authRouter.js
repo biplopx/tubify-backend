@@ -44,7 +44,6 @@ authRouter.put('/:email', async (req, res) => {
     }
   });
 });
-
 // set admin role by mahedi imun 
 authRouter.put('/admin/:email', jwtVerifyUser, async (req, res) => {
   const requester = req.decoded.email;
