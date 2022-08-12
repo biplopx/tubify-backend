@@ -22,7 +22,7 @@ const songSchema = new Schema({
   },
   lyrics: {
     type: String,
-    required: true
+    required: false
   },
   album: {
     type: String,
