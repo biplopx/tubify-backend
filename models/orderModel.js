@@ -27,15 +27,14 @@ const orderSchema = new Schema({
       require:true
       
     },
-    statusPending: {
-      type: Boolean,
-      require:true
-      
-    },
     planName: {
       type: String,
       require:true
       
     },
+    plan:{
+      type:Boolean,
+      require:true
+    }
   },{ timestamps: true });
   module.exports = mongoose.model('Order', orderSchema);

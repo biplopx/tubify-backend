@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const subscription = require('../models/paymentModel');
 const paymentRouter = express.Router();
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const jwtVerifyUser = (req, res, next) => {
     const authToken = req.headers.authorization;
     const token = authToken?.split(' ')[1];
@@ -21,40 +22,36 @@ const jwtVerifyUser = (req, res, next) => {
     }
   };
 // payment  gateway by mahedi imun
-paymentRouter.post("/create-payment-intent",jwtVerifyUser, async (req, res) => {
+paymentRouter.post("/create-payment-intent", async (req, res) => {
     const service = req.body;
     const price = service.price
     const amount = price*100;
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount: amount,
-      currency: "usd",
-      payment_method_types:['card']
+    try{
+      if(amount){
+        const paymentIntent = await stripe.paymentIntents.create({
+          amount: amount,
+          currency: "usd",
+          payment_method_types:['card']
+      
+        });
+        res.send({
+          clientSecret: paymentIntent.client_secret,
+        });
+      }
+    }catch{
+      {
+        res.send(" not found")
+      }
+    }
   
-    });
-  
-    res.send({
-      clientSecret: paymentIntent.client_secret,
-    });
+    
   });
 
   // post payment with patch
-  paymentRouter.patch('/plan/:id', async(req,res)=>{
-    const id = req.params.id;
-    const i= id.toString()
-    const filter = {_id: i};
+  paymentRouter.post('/plan-booked', async(req,res)=>{
     const payment = req.body;
-    const updatedDoc = {
-     $set:{
-      transactionID : payment.transactionId,
-      paid:true,
-      statusPending:true,
-      plan: payment.plan
-     }
-
-    }
-    const result = await subscription.updateOne(filter,updatedDoc)
-    const updatedBooking = await subscription.insertOne(payment)
-    res.send("result")
+    const result = await subscription.create(payment)
+    res.send(result)
   });
 
   // update status order by id 

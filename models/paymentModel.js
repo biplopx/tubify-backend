@@ -1,3 +1,4 @@
+
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const paymentSchema = new Schema({
@@ -23,5 +24,17 @@ const paymentSchema = new Schema({
      
   
     },
+    user:{
+      type:Array,
+      require: true
+    },
+    planId:{
+      type:String,
+      require:true
+    },
+    price:{
+      type:Number,
+      require:true
+    }
   },{ timestamps: true });
   module.exports = mongoose.model('Subscription', paymentSchema);
