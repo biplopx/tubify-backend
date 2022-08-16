@@ -35,6 +35,10 @@ const paymentSchema = new Schema({
     price:{
       type:Number,
       require:true
+    },
+    playlist:{ 
+      type:Array, 
+      require:false
     }
   },{ timestamps: true });
   module.exports = mongoose.model('Subscription', paymentSchema);

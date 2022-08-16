@@ -47,7 +47,7 @@ paymentRouter.post("/create-payment-intent", async (req, res) => {
     
   });
 
-  // post payment with patch
+  // post payment with 
   paymentRouter.post('/plan-booked', async(req,res)=>{
     const payment = req.body;
     const result = await subscription.create(payment)
