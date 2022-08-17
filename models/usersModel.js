@@ -21,6 +21,10 @@ const userSchema = new Schema({
 followedArtist: {
   type: Array,
   required: false
+ },
+ payment:{
+  type:Boolean,
+  required: false
  }
 }, { timestamps: true });
 module.exports = mongoose.model('User', userSchema);
