@@ -1,9 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const orderRouter = express.Router();
-const Order = require('../models/orderModel');
+const bookingRouter = express.Router();
+const Order = require('../models/bookingModel');
 const jwt = require('jsonwebtoken');
-orderRouter.post('/new', async (req, res) => {
+bookingRouter.post('/new-booking', async (req, res) => {
     const order = req.body
     try {
       const perviousOrder = await Order.find({userEmail:order.userEmail});
@@ -18,7 +18,7 @@ orderRouter.post('/new', async (req, res) => {
         res.status(400).json({ error: error.message })
       }
   });
-  orderRouter.get('/my-order/:email', async (req,res)=>{
+  bookingRouter.get('/my-booking/:email', async (req,res)=>{
     const email = req.params.email;
     const query = { userEmail: email };
     const result = await Order.findOne(query);
@@ -28,4 +28,4 @@ orderRouter.post('/new', async (req, res) => {
     };
     res.send(result)
   })
-module.exports = orderRouter;
+module.exports = bookingRouter;
