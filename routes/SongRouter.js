@@ -7,7 +7,7 @@ const songRouter = express.Router();
 // get all song
 songRouter.get('/all-song', async (req, res) => {
   const result = await songModel.find({})
-  res.send(result)
+  res.send(result.reverse())
 });
 
 

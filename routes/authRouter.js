@@ -47,7 +47,6 @@ authRouter.put('/:email', async (req, res) => {
 // set admin role by mahedi imun 
 authRouter.put('/admin/:email', jwtVerifyUser, async (req, res) => {
   const requester = req.decoded.email;
-  console.log(requester)
   const requesterAccount = await User.findOne({ email: requester });
   const email = req.params.email;
   if (requesterAccount.role == 'admin') {
@@ -83,7 +82,7 @@ authRouter.put('/admin/remove/:email', jwtVerifyUser, async (req, res) => {
 authRouter.get('/admin/:email', jwtVerifyUser, async (req, res) => {
   const email = req.params.email;
   const user = await User.findOne({ email: email });
-  const isAdmin = user.role == "admin";
+  const isAdmin = user?.role == "admin";
   res.send({ admin: isAdmin })
 });
 // delete admin by mahedi imun 
