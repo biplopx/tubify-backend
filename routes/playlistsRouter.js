@@ -27,7 +27,7 @@ playlistsRouter.put('/:id', async (req, res) => {
             }
            
                 previousPlayList.map( async playlist => {
-                    const songs = playlist.songs;
+                    const [...songs] = playlist.songs;
                     songs.push(songId);
                     console.log(playlist)
                     await user.save();
