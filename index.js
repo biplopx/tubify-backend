@@ -7,6 +7,7 @@ const songRouter = require('./routes/SongRouter');
 const paymentRouter = require('./routes/paymentRouter');
 const pricingRouter = require('./routes/pricingRouter');
 const orderRouter = require('./routes/orderRouter');
+const playlistsRouter = require('./routes/playlistsRouter');
 const port = process.env.PORT || 5000
 // express app
 const app = express();
@@ -28,7 +29,7 @@ app.use('/song', songRouter);
 app.use('/payment', paymentRouter);
 app.use('/pricing', pricingRouter);
 app.use('/order', orderRouter);
-
+app.use('/playlists', playlistsRouter);
 // connect to db
 mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.kgijh.mongodb.net/tubifydb?retryWrites=true&w=majority`)
   .then(() => {

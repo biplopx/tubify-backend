@@ -82,8 +82,12 @@ authRouter.put('/admin/remove/:email', jwtVerifyUser, async (req, res) => {
 authRouter.get('/admin/:email', jwtVerifyUser, async (req, res) => {
   const email = req.params.email;
   const user = await User.findOne({ email: email });
-  const isAdmin = user?.role == "admin";
-  res.send({ admin: isAdmin })
+  try {
+    const isAdmin = user.role == "admin";
+    res.send({ admin: isAdmin })
+  } catch (err) {
+    res.send(err)
+  }
 });
 // delete admin by mahedi imun 
 authRouter.delete('/admin/:email', jwtVerifyUser, async (req, res) => {
@@ -98,5 +102,8 @@ authRouter.get('/all-users', async (req, res) => {
   const users = await User.find({});
   res.status(200).send(users);
 })
+
+// Single User API
+
 
 module.exports = authRouter;
