@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const User = require('../models/usersModel');
+const songModel = require('../models/songModel');
 const playlistsRouter = express.Router();
 
 playlistsRouter.post('/:id', async (req, res) => {
@@ -31,14 +32,6 @@ playlistsRouter.post('/:id', async (req, res) => {
                 user.save(song);
                 res.status(200).json({ status: "add successful" });
             }
-            previousPlayList.map(async playlist => {
-                const [...songs] = playlist.songs;
-                songs.push(songId);
-                console.log(playlist)
-                await user.save();
-                return res.status(200).json({ status: "add successful" });
-            });
-
 
         }
         else {
@@ -51,6 +44,4 @@ playlistsRouter.post('/:id', async (req, res) => {
     }
 
 })
-
-
 module.exports = playlistsRouter;
