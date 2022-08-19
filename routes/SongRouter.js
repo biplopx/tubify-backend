@@ -152,5 +152,42 @@ songRouter.put('/unlike', async (req, res) => {
   }
 })
 
+// Save for later
+songRouter.put('/save-for-later', async (req, res) => {
+  console.log(req.body)
+  try {
+    const existSong = await songModel.findOne({
+      _id: req.body.id
+    });
+    if (existSong) {
+      const saveForLater = await userModel.updateOne({
+        email: req.body.email
+      }, {
+        $pull: {
+          saveForLater: req.body.id
+        }
+      });
+      console.log(saveForLater);
+      res.status(200).json({
+        code: "success",
+        msg: "save for later.",
+        user: saveForLater
+      });
+    } else {
+      res.status(200).json({
+        code: "error",
+        msg: "There are no song like this.",
+      });
+    }
+  } catch (err) {
+    console.log(err)
+    res.status(500).json({
+      code: "error",
+      msg: "Server Error",
+      err: err
+    });
+  }
+})
+
 
 module.exports = songRouter;

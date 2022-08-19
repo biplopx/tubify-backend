@@ -17,6 +17,10 @@ const userSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Song"
   }],
+  saveForLater: [{
+    type: Schema.Types.ObjectId,
+    ref: "Song"
+  }],
   followedArtist: {
     type: Array,
     required: false
