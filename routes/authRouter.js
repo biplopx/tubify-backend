@@ -1,6 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const { Schema } = mongoose;
 const authRouter = express.Router();
 const jwt = require('jsonwebtoken');
 const User = require('../models/usersModel');
@@ -47,7 +46,6 @@ authRouter.put('/:email', async (req, res) => {
 // set admin role by mahedi imun 
 authRouter.put('/admin/:email', jwtVerifyUser, async (req, res) => {
   const requester = req.decoded.email;
-  console.log(requester)
   const requesterAccount = await User.findOne({ email: requester });
   const email = req.params.email;
   if (requesterAccount.role == 'admin') {
@@ -83,13 +81,12 @@ authRouter.put('/admin/remove/:email', jwtVerifyUser, async (req, res) => {
 authRouter.get('/admin/:email', jwtVerifyUser, async (req, res) => {
   const email = req.params.email;
   const user = await User.findOne({ email: email });
-  try{
+  try {
     const isAdmin = user.role == "admin";
     res.send({ admin: isAdmin })
-  }catch(err){
+  } catch (err) {
     res.send(err)
   }
- 
 });
 // delete admin by mahedi imun 
 authRouter.delete('/admin/:email', jwtVerifyUser, async (req, res) => {
@@ -103,6 +100,13 @@ authRouter.delete('/admin/:email', jwtVerifyUser, async (req, res) => {
 authRouter.get('/all-users', async (req, res) => {
   const users = await User.find({});
   res.status(200).send(users);
+})
+
+// Single User API
+authRouter.get('/single-user/:email', async (req, res) => {
+  const { email } = req.params;
+  const user = await User.findOne({ email: email }).populate('likedSongs');
+  res.status(200).send(user);
 })
 
 module.exports = authRouter;
