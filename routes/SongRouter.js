@@ -108,7 +108,7 @@ songRouter.put('/like', async (req, res) => {
     });
   }
 })
-// // Un liked song api
+// // Un liked song API
 songRouter.put('/unlike', async (req, res) => {
   console.log(req.body)
   try {
@@ -151,7 +151,7 @@ songRouter.put('/unlike', async (req, res) => {
   }
 })
 
-// Save for later
+// Save for later API
 songRouter.put('/save-for-later', async (req, res) => {
   console.log(req.body)
   try {
