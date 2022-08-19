@@ -1,6 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const { Schema } = mongoose;
 const authRouter = express.Router();
 const jwt = require('jsonwebtoken');
 const User = require('../models/usersModel');
@@ -104,6 +103,10 @@ authRouter.get('/all-users', async (req, res) => {
 })
 
 // Single User API
-
+authRouter.get('/single-user/:email', async (req, res) => {
+  const { email } = req.params;
+  const user = await User.findOne({ email: email }).populate('likedSongs');
+  res.status(200).send(user);
+})
 
 module.exports = authRouter;

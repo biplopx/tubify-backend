@@ -37,4 +37,4 @@ const orderSchema = new Schema({
       require:true
     }
   },{ timestamps: true });
-  module.exports = mongoose.model('Order', orderSchema);
+  module.exports = mongoose.model('Booking', orderSchema);

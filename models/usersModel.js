@@ -9,18 +9,21 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
-  playlist: {
+  playlist: [{
+    type: Schema.Types.ObjectId,
+    ref: "Song"
+  }],
+  likedSongs: [{
+    type: Schema.Types.ObjectId,
+    ref: "Song"
+  }],
+  followedArtist: {
     type: Array,
     required: false
-
   },
-  likedSongs: {
-    type: Array,
+  payment: {
+    type: Boolean,
     required: false
-  },
-followedArtist: {
-  type: Array,
-  required: false
- }
+  }
 }, { timestamps: true });
 module.exports = mongoose.model('User', userSchema);
