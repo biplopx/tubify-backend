@@ -69,7 +69,6 @@ songRouter.patch('/edit/:id', async (req, res) => {
 
 // // liked song api
 songRouter.put('/like', async (req, res) => {
-  console.log(req.body)
   try {
     const existSong = await songModel.findOne({
       _id: req.body.id
