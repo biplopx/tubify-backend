@@ -46,11 +46,7 @@ playlistsRouter.put('/:id', async (req, res) => {
     try {
         const user = await User.findById(userId).populate('playlist');
         const existPlaylist = await Playlist.findOne({ name: customPlayListName }).populate('songs');
-        // console.log(user.playlist)
         const existPlaylistInUser = user.playlist.find(list => list.name === customPlayListName)
-        // console.log(existPlaylist)
-        // console.log(user.playlist.includes(existPlaylist))
-        // console.log(user)
         if (existPlaylist && existPlaylistInUser) {
             // Check song exits
             const existSongInPlaylist = existPlaylist.songs.find(song => song._id == songId)
@@ -65,17 +61,14 @@ playlistsRouter.put('/:id', async (req, res) => {
 
         }
         else {
-            console.log(customPlayListName)
             const newPlaylist = await Playlist.create({ name: customPlayListName, songs: [songId] })
-
-            console.log(newPlaylist);
             const updatedUser = await User.updateOne({ _id: userId }, {
                 $push: { playlist: newPlaylist._id }
             });
             return res.status(201).json({ status: "successful create playlist " });
         }
     } catch (err) {
-        console.log(err)
+        // console.log(err)
         res.send(err)
     }
 })
