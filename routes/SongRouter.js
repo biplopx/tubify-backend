@@ -9,7 +9,6 @@ songRouter.get('/all-song', async (req, res) => {
   res.send(result.reverse())
 });
 
-
 // Single Song Route
 songRouter.get('/:id', async (req, res) => {
   const { id } = req.params;

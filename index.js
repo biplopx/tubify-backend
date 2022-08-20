@@ -21,8 +21,6 @@ app.use(
     credentials: true,
   })
 );
-
-
 // Routes
 app.use('/user', authRouter);
 app.use('/song', songRouter);
