@@ -11,20 +11,23 @@ const userSchema = new Schema({
   },
   playlist: {
     type: Array,
-    required: false
-
+    require:true
   },
-  likedSongs: {
+  likedSongs: [{
+    type: Schema.Types.ObjectId,
+    ref: "Song"
+  }],
+  saveForLater: [{
+    type: Schema.Types.ObjectId,
+    ref: "Song"
+  }],
+  followedArtist: {
     type: Array,
     required: false
   },
-followedArtist: {
-  type: Array,
-  required: false
- },
- payment:{
-  type:Boolean,
-  required: false
- }
+  payment: {
+    type: Boolean,
+    required: false
+  }
 }, { timestamps: true });
 module.exports = mongoose.model('User', userSchema);
