@@ -38,7 +38,6 @@ songRouter.post('/add-song', async (req, res) => {
 //  Delete song by id 
 songRouter.delete('/delete/:id', async (req, res) => {
   const { id } = req.params;
-  console.log(id);
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "Item not found" });
   }
@@ -59,7 +58,6 @@ songRouter.patch('/edit/:id', async (req, res) => {
     const song = await songModel.findById({ _id: id })
     Object.assign(song, req.body);
     await song.save();
-    console.log(song)
     res.status(200).json({ status: "successful" });
   } catch (error) {
     res.status(400).json({ error: error.message })
@@ -100,7 +98,6 @@ songRouter.put('/like', async (req, res) => {
       });
     }
   } catch (err) {
-    console.log(err)
     res.status(500).json({
       code: "error",
       msg: "Server Error",
@@ -110,7 +107,6 @@ songRouter.put('/like', async (req, res) => {
 })
 // // Un liked song API
 songRouter.put('/unlike', async (req, res) => {
-  console.log(req.body)
   try {
     const existSong = await songModel.findOne({
       _id: req.body.id
@@ -142,7 +138,6 @@ songRouter.put('/unlike', async (req, res) => {
       });
     }
   } catch (err) {
-    console.log(err)
     res.status(500).json({
       code: "error",
       msg: "Server Error",
@@ -153,7 +148,6 @@ songRouter.put('/unlike', async (req, res) => {
 
 // Save for later API
 songRouter.put('/save-for-later', async (req, res) => {
-  console.log(req.body)
   try {
     const existSong = await songModel.findOne({
       _id: req.body.id
@@ -166,7 +160,6 @@ songRouter.put('/save-for-later', async (req, res) => {
           saveForLater: req.body.id
         }
       });
-      console.log(saveForLater);
       res.status(200).json({
         code: "success",
         msg: "save for later.",
@@ -179,7 +172,6 @@ songRouter.put('/save-for-later', async (req, res) => {
       });
     }
   } catch (err) {
-    console.log(err)
     res.status(500).json({
       code: "error",
       msg: "Server Error",
