@@ -3,8 +3,6 @@ const mongoose = require('mongoose');
 const songModel = require('../models/songModel');
 const userModel = require('../models/usersModel');
 const songRouter = express.Router();
-
-
 // get all song
 songRouter.get('/all-song', async (req, res) => {
   const result = await songModel.find({})
@@ -58,10 +56,6 @@ songRouter.patch('/edit/:id', async (req, res) => {
     const song = await songModel.findById({ _id: id })
     Object.assign(song, req.body);
     await song.save();
-<<<<<<< HEAD
-
-=======
->>>>>>> 3b3eaaf9a954ed18d8f58b9a08218f340ccf853e
     res.status(200).json({ status: "successful" });
   } catch (error) {
     res.status(400).json({ error: error.message })
@@ -152,10 +146,6 @@ songRouter.put('/unlike', async (req, res) => {
 
 // Save for later API
 songRouter.put('/save-for-later', async (req, res) => {
-<<<<<<< HEAD
-
-=======
->>>>>>> 3b3eaaf9a954ed18d8f58b9a08218f340ccf853e
   try {
     const existSong = await songModel.findOne({
       _id: req.body.id

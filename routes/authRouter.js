@@ -8,10 +8,6 @@ const User = require('../models/usersModel');
 const jwtVerifyUser = (req, res, next) => {
   const authToken = req.headers.authorization;
   const token = authToken?.split(' ')[1];
-<<<<<<< HEAD
-
-=======
->>>>>>> 3b3eaaf9a954ed18d8f58b9a08218f340ccf853e
   if (token === 'null') {
     return res.status(401).send({ massage: ('unauthorize') })
   } else {
