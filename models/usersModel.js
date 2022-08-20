@@ -11,7 +11,8 @@ const userSchema = new Schema({
   },
   playlist: {
     type: Array,
-    require:true
+    require:false,
+    ref: "Song"
   },
   likedSongs: [{
     type: Schema.Types.ObjectId,

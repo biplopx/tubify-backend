@@ -7,7 +7,6 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const jwtVerifyUser = (req, res, next) => {
   const authToken = req.headers.authorization;
   const token = authToken?.split(' ')[1];
-  // console.log(token);
   if (token === 'null') {
     return res.status(401).send({ massage: ('unauthorize') })
   } else {
@@ -65,7 +64,7 @@ paymentRouter.put('/plan-booked/:email', async (req, res) => {
 
 paymentRouter.put('/order-status/:id', jwtVerifyUser, async (req, res) => {
   const id = req.params.id;
-  console.log(id);
+
   const filter = { _id: ObjectId(id) };
   const updatedDoc = {
     $set: {
