@@ -8,7 +8,10 @@ const User = require('../models/usersModel');
 const jwtVerifyUser = (req, res, next) => {
   const authToken = req.headers.authorization;
   const token = authToken?.split(' ')[1];
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3b3eaaf9a954ed18d8f58b9a08218f340ccf853e
   if (token === 'null') {
     return res.status(401).send({ massage: ('unauthorize') })
   } else {
@@ -36,7 +39,7 @@ authRouter.put('/:email', async (req, res) => {
   const accessToken = jwt.sign({ email: email }, process.env.ACCESS_JWT_TOKEN_SECRET, { expiresIn: '30d' });
   User.updateOne(filter, updatedDoc, options, function (err, docs) {
     if (err) {
-      console.log(err)
+      // console.log(err)
     }
     else {
       res.send({ accessToken, docs })

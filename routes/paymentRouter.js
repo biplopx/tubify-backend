@@ -50,7 +50,6 @@ paymentRouter.post("/create-payment-intent", async (req, res) => {
 // post payment with 
 paymentRouter.put('/plan-booked/:email', async (req, res) => {
   const email = req.params.email
-  console.log(email)
   const filter = { email: email };
   const payment = req.body;
   const result = await subscription.create(payment)
@@ -64,7 +63,10 @@ paymentRouter.put('/plan-booked/:email', async (req, res) => {
 
 paymentRouter.put('/order-status/:id', jwtVerifyUser, async (req, res) => {
   const id = req.params.id;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3b3eaaf9a954ed18d8f58b9a08218f340ccf853e
   const filter = { _id: ObjectId(id) };
   const updatedDoc = {
     $set: {

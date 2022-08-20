@@ -58,7 +58,10 @@ songRouter.patch('/edit/:id', async (req, res) => {
     const song = await songModel.findById({ _id: id })
     Object.assign(song, req.body);
     await song.save();
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3b3eaaf9a954ed18d8f58b9a08218f340ccf853e
     res.status(200).json({ status: "successful" });
   } catch (error) {
     res.status(400).json({ error: error.message })
@@ -99,7 +102,6 @@ songRouter.put('/like', async (req, res) => {
       });
     }
   } catch (err) {
-    console.log(err)
     res.status(500).json({
       code: "error",
       msg: "Server Error",
@@ -140,7 +142,6 @@ songRouter.put('/unlike', async (req, res) => {
       });
     }
   } catch (err) {
-    console.log(err)
     res.status(500).json({
       code: "error",
       msg: "Server Error",
@@ -151,7 +152,10 @@ songRouter.put('/unlike', async (req, res) => {
 
 // Save for later API
 songRouter.put('/save-for-later', async (req, res) => {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3b3eaaf9a954ed18d8f58b9a08218f340ccf853e
   try {
     const existSong = await songModel.findOne({
       _id: req.body.id
@@ -164,7 +168,6 @@ songRouter.put('/save-for-later', async (req, res) => {
           saveForLater: req.body.id
         }
       });
-      console.log(saveForLater);
       res.status(200).json({
         code: "success",
         msg: "save for later.",

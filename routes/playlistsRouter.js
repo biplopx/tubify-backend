@@ -6,7 +6,7 @@ const playlistsRouter = express.Router();
 playlistsRouter.put('/:id', async (req, res) => {
     const songId = req.params.id;
     const userId = req.body.userId;
-    const customPlayListName = "happy";
+    const customPlayListName = req.body.playlistName;
     try {
         const user = await User.findById(userId);
         const customPlayList = {
