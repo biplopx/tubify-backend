@@ -9,10 +9,14 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
-  playlist: {
-    type: Array,
-    require:true
-  },
+  playlist: [{
+    type: Schema.Types.ObjectId,
+    ref: "Playlist"
+  }],
+  // playlist: {
+  //   type: Array,
+  //   require:true
+  // },
   likedSongs: [{
     type: Schema.Types.ObjectId,
     ref: "Song"

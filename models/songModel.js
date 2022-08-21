@@ -9,7 +9,6 @@ const songSchema = new Schema({
   singer: {
     type: String,
     required: true
-
   },
   cover: {
     type: String,
