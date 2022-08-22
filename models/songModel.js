@@ -9,7 +9,6 @@ const songSchema = new Schema({
   singer: {
     type: String,
     required: true
-
   },
   cover: {
     type: String,
@@ -40,7 +39,12 @@ const songSchema = new Schema({
     type: Schema.Types.ObjectId,
     required: false,
     ref: 'Category'
-  }
+  },
+  likedCount: {
+    type: Number,
+    required: false,
+    default: 0
+  },
 });
 
 module.exports = mongoose.model('Song', songSchema);

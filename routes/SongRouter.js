@@ -1,13 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const songModel = require('../models/songModel');
+const userModel = require('../models/usersModel');
 const songRouter = express.Router();
 
 
 // get all song
 songRouter.get('/all-song', async (req, res) => {
   const result = await songModel.find({})
-  res.send(result)
+  res.send(result.reverse())
 });
 
 
@@ -37,7 +38,6 @@ songRouter.post('/add-song', async (req, res) => {
 //  Delete song by id 
 songRouter.delete('/delete/:id', async (req, res) => {
   const { id } = req.params;
-  console.log(id);
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "Item not found" });
   }
@@ -58,7 +58,6 @@ songRouter.patch('/edit/:id', async (req, res) => {
     const song = await songModel.findById({ _id: id })
     Object.assign(song, req.body);
     await song.save();
-    console.log(song)
     res.status(200).json({ status: "successful" });
   } catch (error) {
     res.status(400).json({ error: error.message })
@@ -66,22 +65,120 @@ songRouter.patch('/edit/:id', async (req, res) => {
 });
 
 
+// // liked song api
+songRouter.put('/like', async (req, res) => {
+  try {
+    const existSong = await songModel.findOne({
+      _id: req.body.id
+    });
+    if (existSong) {
+      const likedSong = await userModel.updateOne({
+        email: req.body.email
+      }, {
+        $push: {
+          likedSongs: req.body.id
+        }
+      });
+      const likedCount = await songModel.updateOne({
+        _id: req.body.id
+      }, {
+        $set: {
+          likedCount: existSong.likedCount + 1
+        }
+      });
+      res.status(200).json({
+        code: "success",
+        msg:
+          "Successfully liked a song.",
+      });
+    } else {
+      res.status(200).json({
+        code: "error",
+        msg: "There are no song like this.",
+      });
+    }
+  } catch (err) {
+    res.status(500).json({
+      code: "error",
+      msg: "Server Error",
+      err: err
+    });
+  }
+})
+// // Un liked song API
+songRouter.put('/unlike', async (req, res) => {
+  try {
+    const existSong = await songModel.findOne({
+      _id: req.body.id
+    });
+    if (existSong) {
+      const likedSong = await userModel.updateOne({
+        email: req.body.email
+      }, {
+        $pull: {
+          likedSongs: req.body.id
+        }
+      });
+      const likedCount = await songModel.updateOne({
+        _id: req.body.id
+      }, {
+        $set: {
+          likedCount: existSong.likedCount - 1
+        }
+      });
+      res.status(200).json({
+        code: "success",
+        msg:
+          "Successfully unlikd a song.",
+      });
+    } else {
+      res.status(200).json({
+        code: "error",
+        msg: "There are no song like this.",
+      });
+    }
+  } catch (err) {
+    res.status(500).json({
+      code: "error",
+      msg: "Server Error",
+      err: err
+    });
+  }
+})
 
-// 
-// songRouter.put('/edit/:id', async (req, res) => {
-//   const { id } = req.params;
-//   const update = req.body;
-//   try {
-//     const updateSong = await songModel.findOneAndUpdate(id, update, {
-//       new: true
-//     });
-//     console.log(updateSong)
-//     res.status(200).send({ status: "successful" })
-//   }
-//   catch (error) {
-//     res.status(400).json({ error: error.message })
-//   }
+// Save for later API
+songRouter.put('/save-for-later', async (req, res) => {
+  try {
+    const existSong = await songModel.findOne({
+      _id: req.body.id
+    });
+    if (existSong) {
+      const saveForLater = await userModel.updateOne({
+        email: req.body.email
+      }, {
+        $pull: {
+          saveForLater: req.body.id
+        }
+      });
+      res.status(200).json({
+        code: "success",
+        msg: "save for later.",
+        user: saveForLater
+      });
+    } else {
+      res.status(200).json({
+        code: "error",
+        msg: "There are no song like this.",
+      });
+    }
+  } catch (err) {
+    res.status(500).json({
+      code: "error",
+      msg: "Server Error",
+      err: err
+    });
+  }
+})
 
-// });
 
 module.exports = songRouter;
