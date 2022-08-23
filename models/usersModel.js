@@ -14,10 +14,6 @@ const userSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Playlist"
   }],
-  // playlist: {
-  //   type: Array,
-  //   require:true
-  // },
   likedSongs: [{
     type: Schema.Types.ObjectId,
     ref: "Song"
@@ -26,10 +22,10 @@ const userSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Song"
   }],
-  followedArtist: {
-    type: Array,
-    required: false
-  },
+  followedArtist: [{
+      type: Schema.Types.ObjectId,
+      ref: "Artist"
+    }],
   payment: {
     type: Boolean,
     required: false
