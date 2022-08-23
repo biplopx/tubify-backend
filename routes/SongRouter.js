@@ -3,14 +3,11 @@ const mongoose = require('mongoose');
 const songModel = require('../models/songModel');
 const userModel = require('../models/usersModel');
 const songRouter = express.Router();
-
-
 // get all song
 songRouter.get('/all-song', async (req, res) => {
   const result = await songModel.find({})
   res.send(result.reverse())
 });
-
 
 // Single Song Route
 songRouter.get('/:id', async (req, res) => {
