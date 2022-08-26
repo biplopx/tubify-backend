@@ -4,14 +4,11 @@ const songModel = require('../models/songModel');
 const userModel = require('../models/usersModel');
 const albumModel = require('../models/albumModel');
 const songRouter = express.Router();
-
-
 // get all song
 songRouter.get('/all-song', async (req, res) => {
   const result = await songModel.find({})
   res.send(result.reverse())
 });
-
 
 // Single Song Route
 songRouter.get('/single-song/:id', async (req, res) => {

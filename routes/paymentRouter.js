@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const subscription = require('../models/paymentModel');
-const paymentRouter = express.Router();
+const paymentRouter = express.Router()
 const User = require('../models/usersModel');
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const jwtVerifyUser = (req, res, next) => {
