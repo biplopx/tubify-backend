@@ -77,10 +77,10 @@ authRouter.put('/admin/remove/:email', jwtVerifyUser, async (req, res) => {
 
 });
 // get admin by mahedi imun 
-authRouter.get('/admin/:email', jwtVerifyUser, async (req, res) => {
+authRouter.get('/admin/:email', async (req, res) => {
   const email = req.params.email;
-  const user = await User.findOne({ email: email });
   try {
+    const user = await User.findOne({ email: email });
     const isAdmin = user.role == "admin";
     res.send({ admin: isAdmin })
   } catch (err) {
