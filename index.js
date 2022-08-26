@@ -8,6 +8,7 @@ const paymentRouter = require('./routes/paymentRouter');
 const pricingRouter = require('./routes/pricingRouter');
 const bookingRouter = require('./routes/bookingRouter');
 const playlistsRouter = require('./routes/playlistsRouter');
+const videoRouter = require('./routes/videoRouter');
 const port = process.env.PORT || 5000
 // express app
 const app = express();
@@ -26,6 +27,7 @@ app.use(
 // Routes
 app.use('/user', authRouter);
 app.use('/song', songRouter);
+app.use('/video', videoRouter);
 app.use('/payment', paymentRouter);
 app.use('/pricing', pricingRouter);
 app.use('/booking', bookingRouter);
