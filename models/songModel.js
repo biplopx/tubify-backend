@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const songSchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
   singer: {
     type: String,
@@ -12,12 +12,11 @@ const songSchema = new Schema({
   },
   cover: {
     type: String,
-    required: true
+    required: true,
   },
   musicSrc: {
     type: String,
     required: true
-
   },
   lyrics: {
     type: String,
@@ -25,7 +24,8 @@ const songSchema = new Schema({
   },
   album: {
     type: String,
-    required: false
+    required: false,
+    ref: "Album"
   },
   musicType: {
     type: String,
