@@ -177,39 +177,6 @@ songRouter.put('/unlike', async (req, res) => {
   }
 })
 
-// Save for later API
-// songRouter.put('/save-for-later', async (req, res) => {
-//   try {
-//     const existSong = await songModel.findOne({
-//       _id: req.body.id
-//     });
-//     if (existSong) {
-//       const saveForLater = await userModel.updateOne({
-//         email: req.body.email
-//       }, {
-//         $pull: {
-//           saveForLater: req.body.id
-//         }
-//       });
-//       res.status(200).json({
-//         code: "success",
-//         msg: "save for later.",
-//         user: saveForLater
-//       });
-//     } else {
-//       res.status(200).json({
-//         code: "error",
-//         msg: "There are no song like this.",
-//       });
-//     }
-//   } catch (err) {
-//     res.status(500).json({
-//       code: "error",
-//       msg: "Server Error",
-//       err: err
-//     });
-//   }
-// })
 
 // Get album
 songRouter.get('/albums', async (req, res) => {
