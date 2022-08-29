@@ -35,6 +35,7 @@ songRouter.post('/add-song', async (req, res) => {
     }
     else {
       const newAlbum = await albumModel.create({ name: newSong.album, albumImg: newSong.cover, songs: [song._id] });
+      console.log(newAlbum)
     }
     res.status(200).json({ status: "successful" });
   } catch (error) {
@@ -84,6 +85,9 @@ songRouter.patch('/edit/:id', async (req, res) => {
       const updatedAlbum2 = await albumModel.updateOne({ name: req.body.album }, {
         $push: { songs: id }
       });
+    }
+    else {
+      const newAlbum = await albumModel.create({ name: req.body.album, albumImg: req.body.cover, songs: [id] });
     }
     res.status(200).json({ status: "successful" });
   } catch (error) {
