@@ -1,8 +1,6 @@
-const express = require('express');
-const mongoose = require('mongoose');
+const express = require('express')
 const artistRouter = express.Router();
 const Artist = require('../models/artistModel');
-
 artistRouter.post('/new-artist', async (req, res) => {
         const artist = req.body
         const previousArtist = await Artist.findOne({ artistName: artist.artistName })

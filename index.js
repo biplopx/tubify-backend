@@ -11,6 +11,7 @@ const playlistsRouter = require('./routes/playlistsRouter');
 const videoRouter = require('./routes/videoRouter');
 const albumRouter = require('./routes/albumRouter')
 const artistRouter = require('./routes/artistRouter');
+const jwtVerifyUser = require('./middleware/jwtVerifyUser');
 const port = process.env.PORT || 5000
 // express app
 const app = express();
@@ -25,15 +26,15 @@ app.use(
   })
 );
 // Routes
-app.use('/user', authRouter);
-app.use('/song', songRouter);
-app.use('/video', videoRouter);
-app.use('/payment', paymentRouter);
-app.use('/pricing', pricingRouter);
-app.use('/booking', bookingRouter);
-app.use('/playlists', playlistsRouter);
-app.use('/albums', albumRouter);
-app.use('/artist', artistRouter);
+app.use('/user',  authRouter);
+app.use('/song',jwtVerifyUser, songRouter);
+app.use('/video',jwtVerifyUser, videoRouter);
+app.use('/payment',jwtVerifyUser, paymentRouter);
+app.use('/pricing',jwtVerifyUser, pricingRouter);
+app.use('/booking',jwtVerifyUser, bookingRouter);
+app.use('/playlists', jwtVerifyUser,playlistsRouter);
+app.use('/albums', jwtVerifyUser,albumRouter);
+app.use('/artist', jwtVerifyUser,artistRouter);
 // connect to db
 mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.kgijh.mongodb.net/tubifydb?retryWrites=true&w=majority`)
   .then(() => {
