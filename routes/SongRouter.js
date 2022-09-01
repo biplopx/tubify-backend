@@ -20,7 +20,26 @@ songRouter.get('/single-song/:id', async (req, res) => {
   catch {
     res.send("Song not found")
   }
-})
+});
+// ger song by name
+songRouter.get('/song-by-name/:name', async (req, res) => {
+  try {
+    const { name } = req.params;
+    const includeName = new RegExp(name, 'i');
+    const song = await songModel.find({ name: includeName });
+    if(song == null){
+      res.send({massage:"Song not found"})
+    }else{
+      res.send(song);
+    }
+    
+  }
+  catch {
+    res.send("error")
+  }
+}
+);
+
 
 // Add Song api
 songRouter.post('/add-song', async (req, res) => {
