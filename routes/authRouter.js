@@ -16,7 +16,7 @@ authRouter.put('/:email', async (req, res) => {
   const accessToken = jwt.sign({ email: email }, process.env.ACCESS_JWT_TOKEN_SECRET);
   User.updateOne(filter, updatedDoc, options, function (err, docs) {
     if (err) {
-      // console.log(err)
+      res.send(err)
     }
     else {
       res.send({ accessToken, docs })

@@ -27,12 +27,12 @@ songRouter.get('/song-by-name/:name', async (req, res) => {
     const { name } = req.params;
     const includeName = new RegExp(name, 'i');
     const song = await songModel.find({ name: includeName });
-    if(song == null){
-      res.send({massage:"Song not found"})
-    }else{
+    if (song == null) {
+      res.send({ massage: "Song not found" })
+    } else {
       res.send(song);
     }
-    
+
   }
   catch {
     res.send("error")
@@ -199,7 +199,6 @@ songRouter.put('/unlike', async (req, res) => {
 // paid song api
 songRouter.get('/paid-songs', async (req, res) => {
   const result = await songModel.find({ musicType: 'paid' })
-  console.log(result)
   res.send(result.reverse())
 });
 

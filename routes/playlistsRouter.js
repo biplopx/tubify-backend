@@ -33,7 +33,6 @@ playlistsRouter.put('/:id', async (req, res) => {
             return res.status(201).json({ status: "successful create playlist " });
         }
     } catch (err) {
-        // console.log(err)
         res.send(err)
     }
 })
