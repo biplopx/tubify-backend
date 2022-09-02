@@ -83,8 +83,9 @@ authRouter.get('/all-users', jwtVerifyUser, async (req, res) => {
 })
 
 // Single User API
+
 authRouter.get('/single-user/:email', jwtVerifyUser, async (req, res) => {
-  const { email } = req.params;
+  const email = req.params.email;
   const user = await User.findOne({ email: email }).populate('likedSongs').populate({ path: 'playlist', populate: { path: 'songs', model: 'Song' } })
   res.status(200).send(user);
 })
