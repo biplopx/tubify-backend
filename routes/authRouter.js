@@ -3,26 +3,7 @@ const mongoose = require('mongoose');
 const authRouter = express.Router();
 const jwt = require('jsonwebtoken');
 const User = require('../models/usersModel');
-
-// Verify User JWT by mahedi imun
-const jwtVerifyUser = (req, res, next) => {
-  const authToken = req.headers.authorization;
-  const token = authToken?.split(' ')[1];
-  if (token === 'null') {
-    return res.status(401).send({ massage: ('unauthorize') })
-  } else {
-
-    jwt.verify(token, process.env.ACCESS_JWT_TOKEN_SECRET, (err, decoded) => {
-      if (err) {
-        return res.status(403).send({ massage: ('forbidden access') })
-      } else {
-        req.decoded = decoded
-        next()
-      }
-    })
-  }
-};
-
+const jwtVerifyUser = require('../middleware/jwtVerifyUser');
 // authentication send token and save user email mongodb by mahedi imun
 authRouter.put('/:email', async (req, res) => {
   const email = req.params.email;
@@ -32,10 +13,10 @@ authRouter.put('/:email', async (req, res) => {
   const updatedDoc = {
     $set: user,
   };
-  const accessToken = jwt.sign({ email: email }, process.env.ACCESS_JWT_TOKEN_SECRET, { expiresIn: '30d' });
+  const accessToken = jwt.sign({ email: email }, process.env.ACCESS_JWT_TOKEN_SECRET);
   User.updateOne(filter, updatedDoc, options, function (err, docs) {
     if (err) {
-      // console.log(err)
+      res.send(err)
     }
     else {
       res.send({ accessToken, docs })
@@ -43,7 +24,7 @@ authRouter.put('/:email', async (req, res) => {
   });
 });
 // set admin role by mahedi imun 
-authRouter.put('/admin/:email', jwtVerifyUser, async (req, res) => {
+authRouter.put('/admin/:email', async (req, res) => {
   const requester = req.decoded.email;
   const requesterAccount = await User.findOne({ email: requester });
   const email = req.params.email;
@@ -79,8 +60,8 @@ authRouter.put('/admin/remove/:email', jwtVerifyUser, async (req, res) => {
 // get admin by mahedi imun 
 authRouter.get('/admin/:email', jwtVerifyUser, async (req, res) => {
   const email = req.params.email;
-  const user = await User.findOne({ email: email });
   try {
+    const user = await User.findOne({ email: email });
     const isAdmin = user.role == "admin";
     res.send({ admin: isAdmin })
   } catch (err) {
@@ -96,14 +77,15 @@ authRouter.delete('/admin/:email', jwtVerifyUser, async (req, res) => {
 });
 
 // get all users
-authRouter.get('/all-users', async (req, res) => {
+authRouter.get('/all-users', jwtVerifyUser, async (req, res) => {
   const users = await User.find({});
   res.status(200).send(users);
 })
 
 // Single User API
-authRouter.get('/single-user/:email', async (req, res) => {
-  const { email } = req.params;
+
+authRouter.get('/single-user/:email', jwtVerifyUser, async (req, res) => {
+  const email = req.params.email;
   const user = await User.findOne({ email: email }).populate('likedSongs').populate({ path: 'playlist', populate: { path: 'songs', model: 'Song' } })
   res.status(200).send(user);
 })

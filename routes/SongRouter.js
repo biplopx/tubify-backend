@@ -20,7 +20,26 @@ songRouter.get('/single-song/:id', async (req, res) => {
   catch {
     res.send("Song not found")
   }
-})
+});
+// ger song by name
+songRouter.get('/song-by-name/:name', async (req, res) => {
+  try {
+    const { name } = req.params;
+    const includeName = new RegExp(name, 'i');
+    const song = await songModel.find({ name: includeName });
+    if (song == null) {
+      res.send({ massage: "Song not found" })
+    } else {
+      res.send(song);
+    }
+
+  }
+  catch {
+    res.send("error")
+  }
+}
+);
+
 
 // Add Song api
 songRouter.post('/add-song', async (req, res) => {
@@ -84,6 +103,9 @@ songRouter.patch('/edit/:id', async (req, res) => {
       const updatedAlbum2 = await albumModel.updateOne({ name: req.body.album }, {
         $push: { songs: id }
       });
+    }
+    else {
+      const newAlbum = await albumModel.create({ name: req.body.album, albumImg: req.body.cover, songs: [id] });
     }
     res.status(200).json({ status: "successful" });
   } catch (error) {
@@ -173,44 +195,12 @@ songRouter.put('/unlike', async (req, res) => {
   }
 })
 
-// Save for later API
-// songRouter.put('/save-for-later', async (req, res) => {
-//   try {
-//     const existSong = await songModel.findOne({
-//       _id: req.body.id
-//     });
-//     if (existSong) {
-//       const saveForLater = await userModel.updateOne({
-//         email: req.body.email
-//       }, {
-//         $pull: {
-//           saveForLater: req.body.id
-//         }
-//       });
-//       res.status(200).json({
-//         code: "success",
-//         msg: "save for later.",
-//         user: saveForLater
-//       });
-//     } else {
-//       res.status(200).json({
-//         code: "error",
-//         msg: "There are no song like this.",
-//       });
-//     }
-//   } catch (err) {
-//     res.status(500).json({
-//       code: "error",
-//       msg: "Server Error",
-//       err: err
-//     });
-//   }
-// })
 
-// Get album
-songRouter.get('/albums', async (req, res) => {
-  const albums = await songModel.find({}).select('album')
-  res.send(albums)
-})
+// paid song api
+songRouter.get('/paid-songs', async (req, res) => {
+  const result = await songModel.find({ musicType: 'paid' })
+  res.send(result.reverse())
+});
+
 
 module.exports = songRouter;

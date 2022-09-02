@@ -11,11 +11,11 @@ const userSchema = new Schema({
     },
     artistProfile: {
         type: String,
-        required: true,
+        required: false,
     },
     artistCover: {
         type: String,
-        required: true,
+        required: false,
     }
 }, { timestamps: true });
 module.exports = mongoose.model('Artist', userSchema);

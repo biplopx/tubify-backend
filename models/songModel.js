@@ -24,7 +24,7 @@ const songSchema = new Schema({
   },
   album: {
     type: String,
-    required: false,
+    // required: false,
     ref: "Album"
   },
   musicType: {
