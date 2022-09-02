@@ -13,7 +13,7 @@ authRouter.put('/:email', async (req, res) => {
   const updatedDoc = {
     $set: user,
   };
-  const accessToken = jwt.sign({ email: email }, process.env.ACCESS_JWT_TOKEN_SECRET, { expiresIn: '30d' });
+  const accessToken = jwt.sign({ email: email }, process.env.ACCESS_JWT_TOKEN_SECRET);
   User.updateOne(filter, updatedDoc, options, function (err, docs) {
     if (err) {
       // console.log(err)
@@ -69,7 +69,7 @@ authRouter.get('/admin/:email', jwtVerifyUser, async (req, res) => {
   }
 });
 // delete admin by mahedi imun 
-authRouter.delete('/admin/:email',jwtVerifyUser,  async (req, res) => {
+authRouter.delete('/admin/:email', jwtVerifyUser, async (req, res) => {
   const email = req.params.email;
   const filter = { email: email }
   const result = await User.deleteOne(filter)
@@ -77,13 +77,13 @@ authRouter.delete('/admin/:email',jwtVerifyUser,  async (req, res) => {
 });
 
 // get all users
-authRouter.get('/all-users',jwtVerifyUser, async (req, res) => {
+authRouter.get('/all-users', jwtVerifyUser, async (req, res) => {
   const users = await User.find({});
   res.status(200).send(users);
 })
 
 // Single User API
-authRouter.get('/single-user/:email',jwtVerifyUser, async (req, res) => {
+authRouter.get('/single-user/:email', jwtVerifyUser, async (req, res) => {
   const { email } = req.params;
   const user = await User.findOne({ email: email }).populate('likedSongs').populate({ path: 'playlist', populate: { path: 'songs', model: 'Song' } })
   res.status(200).send(user);
