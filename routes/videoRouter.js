@@ -5,13 +5,13 @@ const userModel = require("../models/usersModel");
 const videoRouter = express.Router();
 
 // get all song
-videoRouter.get("/all-video", async (req, res) => {
+videoRouter.get("/all-videos", async (req, res) => {
   const result = await videoModel.find({});
   res.send(result.reverse());
 });
 
 // Single Video Route
-videoRouter.get("/:id", async (req, res) => {
+videoRouter.get("/single-video/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const video = await videoModel.findById({ _id: id });
@@ -24,7 +24,6 @@ videoRouter.get("/:id", async (req, res) => {
 // Add Video
 videoRouter.post("/add-video", async (req, res) => {
   const newVideo = req.body;
-  console.log(newVideo)
   try {
     await videoModel.create(newVideo);
     res.status(200).json({ status: "successful" });
@@ -58,20 +57,6 @@ videoRouter.patch("/edit/:id", async (req, res) => {
     Object.assign(video, req.body);
     await video.save();
     res.status(200).json({ status: "successful" });
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-});
-
-// Get video by id
-videoRouter.get("/:id", async (req, res) => {
-  const { id } = req.params;
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: "Item not found" });
-  }
-  try {
-    const video = await videoModel.findById({ _id: id });
-    res.status(200).json(video);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
