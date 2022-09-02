@@ -26,15 +26,15 @@ app.use(
   })
 );
 // Routes
-app.use('/user',  authRouter);
-app.use('/song',jwtVerifyUser, songRouter);
-app.use('/video',jwtVerifyUser, videoRouter);
-app.use('/payment',jwtVerifyUser, paymentRouter);
-app.use('/pricing',jwtVerifyUser, pricingRouter);
-app.use('/booking',jwtVerifyUser, bookingRouter);
-app.use('/playlists', jwtVerifyUser,playlistsRouter);
-app.use('/albums', jwtVerifyUser,albumRouter);
-app.use('/artist', jwtVerifyUser,artistRouter);
+app.use('/user', authRouter);
+app.use('/song', jwtVerifyUser, songRouter);
+app.use('/video', jwtVerifyUser, videoRouter);
+app.use('/payment', jwtVerifyUser, paymentRouter);
+app.use('/pricing', pricingRouter);
+app.use('/booking', jwtVerifyUser, bookingRouter);
+app.use('/playlists', jwtVerifyUser, playlistsRouter);
+app.use('/albums', jwtVerifyUser, albumRouter);
+app.use('/artist', jwtVerifyUser, artistRouter);
 // connect to db
 mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.kgijh.mongodb.net/tubifydb?retryWrites=true&w=majority`)
   .then(() => {

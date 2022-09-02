@@ -54,7 +54,6 @@ songRouter.post('/add-song', async (req, res) => {
     }
     else {
       const newAlbum = await albumModel.create({ name: newSong.album, albumImg: newSong.cover, songs: [song._id] });
-      console.log(newAlbum)
     }
     res.status(200).json({ status: "successful" });
   } catch (error) {
@@ -197,10 +196,12 @@ songRouter.put('/unlike', async (req, res) => {
 })
 
 
-// Get album
-songRouter.get('/albums', async (req, res) => {
-  const albums = await songModel.find({}).select('album')
-  res.send(albums)
-})
+// paid song api
+songRouter.get('/paid-songs', async (req, res) => {
+  const result = await songModel.find({ musicType: 'paid' })
+  console.log(result)
+  res.send(result.reverse())
+});
+
 
 module.exports = songRouter;

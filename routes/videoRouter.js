@@ -24,6 +24,7 @@ videoRouter.get("/:id", async (req, res) => {
 // Add Video
 videoRouter.post("/add-video", async (req, res) => {
   const newVideo = req.body;
+  console.log(newVideo)
   try {
     await videoModel.create(newVideo);
     res.status(200).json({ status: "successful" });
@@ -46,7 +47,7 @@ videoRouter.delete("/delete/:id", async (req, res) => {
   }
 });
 
-//  Edit song by id
+//  Edit video by id
 videoRouter.patch("/edit/:id", async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
